@@ -56,13 +56,4 @@ public class FightOneKickData {
         MonsterCurrentHp = monsterCurrentHp;
     }
 
-    // public int getOneKickType() {
-    // if (describe.startsWith("->")) {
-    // return H2M;
-    // } else if (describe.startsWith("<-")) {
-    // return M2H;
-    // } else {
-    // return DEFAULT;
-    // }
-    // }
 }

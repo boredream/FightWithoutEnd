@@ -63,6 +63,11 @@ public class Treasure {
         this.dropProbability = dropProbability;
     }
 
+    /**
+     * 获取装备位置
+     * 
+     * @return EQUIP_LOCATION_WEAPON = 1 武器; EQUIP_LOCATION_ARMOR = 2 防具
+     */
     public int getEquipLocation() {
         if (attAddition > defAddition) {
             equipLocation = EQUIP_LOCATION_WEAPON;

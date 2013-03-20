@@ -1,12 +1,15 @@
 
 package com.boredream.fightwithoutend.controller;
 
+import android.util.Log;
+
 import com.boredream.fightwithoutend.domain.FightOneKickData;
 import com.boredream.fightwithoutend.domain.FightOneturnData;
 import com.boredream.fightwithoutend.domain.Hero;
 import com.boredream.fightwithoutend.domain.Monster;
 
 public class FightDataInfoController {
+    private static final String TAG = "FightDataInfoController";
 
     public static Hero hero = Hero.initHero();
 
@@ -22,6 +25,8 @@ public class FightDataInfoController {
     public static boolean heroIsWin = false;
 
     public static FightOneturnData runOneTurn(Monster monster) {
+
+        Log.i(TAG, "runOneTurn(" + monster + ")");
 
         type = TYPE_H2M;
 
@@ -47,10 +52,13 @@ public class FightDataInfoController {
                     oneKickInfo += "\n\"怪物:" + monster.getName()
                             + "\"的生命降为0,你胜利了!";
                     oneturnData.setFightOutcome(FightOneturnData.FIGHT_OUTCOME_HERO_IS_WIN);
-                    oneturnData.setTreasureGaint(ProbabilityEventController.dropTreasure(monster));
+                    oneturnData.addTreasureGaint(ProbabilityEventController.dropTreasure(monster));
                 } else {
                     type = TYPE_M2H;
                 }
+
+                Log.i(TAG, "对战'" + monster.getName() + "'一轮战斗信息 -------------------- "
+                        + oneKickInfo);
 
                 // new一个"一次击打信息"的bean
                 oneKickData.setDescribe(oneKickInfo);
@@ -77,6 +85,9 @@ public class FightDataInfoController {
                     type = TYPE_H2M;
                 }
 
+                Log.i(TAG, "对战'" + monster.getName() + "'一轮战斗信息 ---------- "
+                        + oneKickInfo);
+
                 // new一个"一次击打信息"的bean
                 oneKickData.setDescribe(oneKickInfo);
                 oneKickData.setHarmValue(m2hHarm);
@@ -90,12 +101,21 @@ public class FightDataInfoController {
         return oneturnData;
     }
 
+    /**
+     * 经验提升
+     * 
+     * @param oneturnData 一轮战斗信息
+     */
     public static void expRise(FightOneturnData oneturnData) {
         int expGaint = oneturnData.getExpGaint();
         hero.exp += expGaint;
+        Log.i(TAG, "获得经验:" + expGaint);
         checkLevelRise();
     }
 
+    /**
+     * 检验当前经验是否足够升级
+     */
     public static void checkLevelRise() {
         // 经验足够,升级
         if (hero.exp >= hero.currentLevelNeedExp()) {
@@ -103,6 +123,11 @@ public class FightDataInfoController {
             hero.level++;
             hero.setAttackValue(hero.getAttackValue() + Hero.ATR_RISE);
             hero.setDefenseValue(hero.getDefenseValue() + Hero.DEF_RISE);
+            Log.i(TAG, "升级! 等级:" + (hero.level - 1) + "->" + hero.level);
+            Log.i(TAG, "升级! 攻击:" + (hero.getAttackValue() - Hero.ATR_RISE)
+                    + "->" + hero.getAttackValue());
+            Log.i(TAG, "升级! 防御:" + (hero.getDefenseValue() - Hero.DEF_RISE)
+                    + "->" + hero.getDefenseValue());
         }
     }
 }
