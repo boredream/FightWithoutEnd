@@ -1,6 +1,8 @@
 
 package com.boredream.fightwithoutend.controller;
 
+import android.util.Log;
+
 import com.boredream.fightwithoutend.domain.Monster;
 import com.boredream.fightwithoutend.domain.Treasure;
 
@@ -14,6 +16,8 @@ import java.util.Random;
  * @author boredream
  */
 public class ProbabilityEventController {
+
+    private static final String TAG = null;
 
     private static Random random = new Random();
 
@@ -37,6 +41,12 @@ public class ProbabilityEventController {
         return totalMons.get(random.nextInt(totalMons.size()));
     }
 
+    /**
+     * 宝物掉落事件控制
+     * 
+     * @param monster 打死的怪物
+     * @return 爆出的宝物集合
+     */
     public static List<Treasure> dropTreasure(Monster monster) {
         List<Treasure> possibleDropTreasures = monster.getPossibleDropTreasure();
         List<Treasure> realDropTreasures = new ArrayList<Treasure>();
@@ -46,6 +56,7 @@ public class ProbabilityEventController {
                 realDropTreasures.add(treasure);
             }
         }
+        Log.i(TAG, "怪物:" + monster.getName() + "");
         return realDropTreasures;
     }
 

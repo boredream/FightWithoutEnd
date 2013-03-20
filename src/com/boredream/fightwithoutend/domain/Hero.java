@@ -1,10 +1,13 @@
 
 package com.boredream.fightwithoutend.domain;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hero {
+    private static final String TAG = "Hero";
 
     public static final int MAX_HP = 20;
     // 攻击成长
@@ -88,25 +91,25 @@ public class Hero {
         if (treasure.getEquipLocation() == Treasure.EQUIP_LOCATION_WEAPON) {
             // 当前装备非空时,先将当前装备移回物品栏,把当前装备清空
             if (currentWeapon != null) {
+                Log.i(TAG, "equip(" + treasure + ") -- 卸下武器");
                 totalObtainTreasure.add(currentWeapon);
-                System.out.println("替换下" + currentWeapon.getName());
                 currentWeapon = null;
             }
             // 再将新的装备换上,而当前装备为空时,则直接跳过以上过程
             totalObtainTreasure.remove(treasure);
             currentWeapon = treasure;
-            System.out.println("装备上" + currentWeapon);
+            Log.i(TAG, "equip(" + treasure + ") -- 装备上武器");
         } else {
             // 当前装备非空时,先将当前装备移回物品栏,把当前装备清空
             if (currentArmor != null) {
+                Log.i(TAG, "equip(" + treasure + ") -- 卸下防具");
                 totalObtainTreasure.add(currentArmor);
-                System.out.println("替换下" + currentArmor.getName());
                 currentArmor = null;
             }
             // 再将新的装备换上,而当前装备为空时,则直接跳过以上过程
             totalObtainTreasure.remove(treasure);
             currentArmor = treasure;
-            System.out.println("装备上" + currentArmor);
+            Log.i(TAG, "equip(" + treasure + ") -- 装备上防具");
         }
     }
 

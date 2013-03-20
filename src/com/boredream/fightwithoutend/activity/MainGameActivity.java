@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,6 +35,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainGameActivity extends Activity implements OnClickListener, OnItemClickListener {
+    private static final String TAG = "MainGameActivity";
+
     // 战斗刷新速度
     private long refreshInfoSpeed = 500;
 
@@ -218,6 +221,8 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_gameview);
 
+        Log.i(TAG, "start game~");
+
         initGameData();
 
         mainInfoSv = (ScrollView) findViewById(R.id.main_info_sv);
@@ -330,6 +335,7 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.itembar_contribute:
+                Log.i(TAG, "onClick() -- R.id.itembar_contribute -- 点击了属性按钮");
                 itembarContri.setBackgroundResource(R.color.current_item);
                 itemContri.setVisibility(View.VISIBLE);
                 itembarEquip.setBackgroundResource(R.color.transparent);
@@ -339,6 +345,7 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
                 break;
 
             case R.id.itembar_equip:
+                Log.i(TAG, "onClick() -- R.id.itembar_equip -- 点击了装备按钮");
                 itembarContri.setBackgroundResource(R.color.transparent);
                 itemContri.setVisibility(View.GONE);
                 itembarEquip.setBackgroundResource(R.color.current_item);
@@ -347,6 +354,7 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
                 itemGoods.setVisibility(View.GONE);
                 break;
             case R.id.itembar_goods:
+                Log.i(TAG, "onClick() -- R.id.itembar_goods -- 点击了物品按钮");
                 itembarContri.setBackgroundResource(R.color.transparent);
                 itemContri.setVisibility(View.GONE);
                 itembarEquip.setBackgroundResource(R.color.transparent);
@@ -400,6 +408,8 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.i(TAG, "onItemClick() -- position=" + position +
+                ";obj=" + itemGoodsAdapter.getItem(position));
         Treasure treasure = itemGoodsAdapter.getItem(position);
         hero.equip(treasure);
         handler.sendEmptyMessage(11);
