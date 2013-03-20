@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainMenuActivity" >
+
+    <TextView
+        android:id="@+id/menu_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="120dp"
+        android:text="无尽的战斗"
+        android:textSize="50sp" />
+
+    <TextView
+        android:id="@+id/menu_version_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/menu_title_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="version-1.0"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/menu_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/menu_version_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:text="开 始 游 戏"
+        android:textSize="40sp" />
+
+</RelativeLayout>
