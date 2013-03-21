@@ -9,7 +9,11 @@ import java.util.List;
 public class Hero {
     private static final String TAG = "Hero";
 
-    public static final int MAX_HP = 20;
+    // 血上限
+    public static int MAX_HP = 20;
+
+    // 血上限成长
+    public static final int MAX_HP_RISE = 5;
     // 攻击成长
     public static final int ATR_RISE = 2;
     // 防御成长
@@ -19,6 +23,8 @@ public class Hero {
     private int hp;
     private int attrackValue;
     private int defenseValue;
+    private List<Skill> possibleLearnSkill; // 可能学会的技能
+    private List<Skill> existSkill; // 已有的技能
     public int level;
     public int exp;
     public List<Treasure> totalObtainTreasure;
@@ -84,6 +90,8 @@ public class Hero {
     public static Hero initHero() {
         Hero hero = new Hero("勇士a", MAX_HP, 10, 5, 0, 0);
         hero.totalObtainTreasure = new ArrayList<Treasure>();
+        hero.existSkill = new ArrayList<Skill>();
+        hero.possibleLearnSkill = Skill.getAllSkills();
         return hero;
     }
 
@@ -165,6 +173,10 @@ public class Hero {
                 exp10to11, exp11to12, exp12to13, exp13to14, exp14to15,
                 exp15to16, exp16to17, exp17to18, exp18to19, exp19to20
         };
+    }
+
+    public void initHp() {
+        hp = MAX_HP;
     }
 
 }

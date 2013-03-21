@@ -34,7 +34,7 @@
         </ScrollView>
 
         <LinearLayout
-            android:id="@+id/main_itembar"
+            android:id="@+id/main_root_itembar"
             android:layout_width="fill_parent"
             android:layout_height="30dp"
             android:layout_toRightOf="@id/main_info_sv"
@@ -42,268 +42,424 @@
             android:orientation="horizontal" >
 
             <TextView
-                android:id="@+id/itembar_contribute"
+                android:id="@+id/root_itembar_character"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:background="#7a31ff"
                 android:clickable="true"
                 android:gravity="center"
-                android:text="属性" />
+                android:text="人物" />
 
             <View
-                android:layout_width="1px"
+                android:layout_width="1dp"
                 android:layout_height="fill_parent"
                 android:background="#fff" />
 
             <TextView
-                android:id="@+id/itembar_equip"
+                android:id="@+id/root_itembar_other"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:clickable="true"
                 android:gravity="center"
-                android:text="装备" />
-
-            <View
-                android:layout_width="1px"
-                android:layout_height="fill_parent"
-                android:background="#fff" />
-
-            <TextView
-                android:id="@+id/itembar_goods"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="物品" />
+                android:text="其他" />
         </LinearLayout>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/main_root_itembar"
+            android:background="#fff" />
+
         <LinearLayout
-            android:id="@+id/item_contribute"
+            android:id="@+id/root_item_character"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/main_itembar"
+            android:layout_below="@id/main_root_itembar"
+            android:layout_marginTop="1dp"
             android:layout_toRightOf="@id/main_info_sv"
             android:orientation="vertical" >
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:background="#069"
-                android:gravity="center"
-                android:text="属性一览"
-                android:textColor="#fff"
-                android:textSize="20sp" />
-
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="fill_parent"
-                    android:gravity="center_vertical"
-                    android:text="HP"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/main_contri_hp"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:gravity="center_vertical"
-                    android:textSize="20sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="fill_parent"
-                    android:gravity="center_vertical"
-                    android:text="攻击"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/main_contri_att"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:gravity="center_vertical"
-                    android:textSize="20sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="fill_parent"
-                    android:gravity="center_vertical"
-                    android:text="防御"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/main_contri_def"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:gravity="center_vertical"
-                    android:textSize="20sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="fill_parent"
-                    android:gravity="center_vertical"
-                    android:text="等级"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/main_contri_level"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:gravity="center_vertical"
-                    android:textSize="20sp" />
-            </LinearLayout>
-
-            <LinearLayout
+                android:id="@+id/character_itembar"
                 android:layout_width="fill_parent"
                 android:layout_height="30dp"
+                android:background="#58c4ff"
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:layout_width="55dp"
+                    android:id="@+id/character_itembar_contribute"
+                    android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    android:gravity="center_vertical"
-                    android:text="当前经验"
-                    android:textSize="12sp" />
+                    android:layout_weight="1"
+                    android:background="#7a31ff"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="属性" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="fill_parent"
+                    android:background="#fff" />
 
                 <TextView
-                    android:id="@+id/main_contri_currentexp"
-                    android:layout_width="fill_parent"
+                    android:id="@+id/character_itembar_equip"
+                    android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    android:gravity="center_vertical"
-                    android:textSize="12sp" />
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="装备" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="fill_parent"
+                    android:background="#fff" />
+
+                <TextView
+                    android:id="@+id/character_itembar_goods"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="物品" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/character_item_contribute"
                 android:layout_width="fill_parent"
-                android:layout_height="30dp"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="55dp"
-                    android:layout_height="fill_parent"
-                    android:gravity="center_vertical"
-                    android:text="所需经验"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/main_contri_needexp"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:gravity="center_vertical"
-                    android:textSize="12sp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/item_equip"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/main_itembar"
-            android:layout_toRightOf="@id/main_info_sv"
-            android:orientation="vertical"
-            android:visibility="gone" >
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:background="#069"
-                android:gravity="center"
-                android:text="装备一览"
-                android:textColor="#fff"
-                android:textSize="20sp" />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="50dp"
-                    android:layout_height="fill_parent"
-                    android:gravity="center_vertical"
-                    android:text="武器"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/equip_weapon"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:gravity="center_vertical"
-                    android:textSize="10sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="50dp"
-                    android:layout_height="fill_parent"
-                    android:gravity="center_vertical"
-                    android:text="防具"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/equip_armor"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:gravity="center_vertical"
-                    android:textSize="10sp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/item_goods"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/main_itembar"
-            android:layout_toRightOf="@id/main_info_sv"
-            android:orientation="vertical"
-            android:visibility="gone" >
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:background="#069"
-                android:gravity="center"
-                android:text="物品一览"
-                android:textColor="#fff"
-                android:textSize="20sp" />
-
-            <ListView
-                android:id="@+id/item_goods_container"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:orientation="vertical" >
-            </ListView>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:background="#069"
+                    android:gravity="center"
+                    android:text="属性一览"
+                    android:textColor="#fff"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:text="HP"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/main_contri_hp"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:text="攻击"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/main_contri_att"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:text="防御"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/main_contri_def"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:text="等级"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/main_contri_level"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="55dp"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:text="当前经验"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/main_contri_currentexp"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="55dp"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:text="所需经验"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/main_contri_needexp"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/character_item_equip"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:background="#069"
+                    android:gravity="center"
+                    android:text="装备一览"
+                    android:textColor="#fff"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:text="武器"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/equip_weapon"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:text="防具"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/equip_armor"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:textSize="10sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/character_item_goods"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:background="#069"
+                    android:gravity="center"
+                    android:text="物品一览"
+                    android:textColor="#fff"
+                    android:textSize="20sp" />
+
+                <ListView
+                    android:id="@+id/item_goods_container"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+                </ListView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/root_item_other"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@id/main_root_itembar"
+            android:layout_marginTop="1dp"
+            android:layout_toRightOf="@id/main_info_sv"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <LinearLayout
+                android:id="@+id/other_itembar"
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:background="#58c4ff"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/other_itembar_shop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="#7a31ff"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="商店" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="fill_parent"
+                    android:background="#fff" />
+
+                <TextView
+                    android:id="@+id/other_itembar_map"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="地图" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/other_item_shop"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:background="#069"
+                    android:gravity="center"
+                    android:text="商店"
+                    android:textColor="#fff"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:text="大淫棍"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/item_shop_sell1"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:text="$100"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:text="小淫枪"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/main_contri_att"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:text="$50"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/other_item_map"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:background="#069"
+                    android:gravity="center"
+                    android:text="地图"
+                    android:textColor="#fff"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 

@@ -31,7 +31,7 @@ public class FightDataInfoController {
         type = TYPE_H2M;
 
         monster.initHp();
-        hero.setHp(20);
+        hero.initHp();
 
         FightOneturnData oneturnData = new FightOneturnData(monster);
         FightOneKickData oneKickData;
@@ -57,9 +57,6 @@ public class FightDataInfoController {
                     type = TYPE_M2H;
                 }
 
-                Log.i(TAG, "对战'" + monster.getName() + "'一轮战斗信息 -------------------- "
-                        + oneKickInfo);
-
                 // new一个"一次击打信息"的bean
                 oneKickData.setDescribe(oneKickInfo);
                 oneKickData.setHarmValue(h2mHarm);
@@ -84,9 +81,6 @@ public class FightDataInfoController {
                 } else {
                     type = TYPE_H2M;
                 }
-
-                Log.i(TAG, "对战'" + monster.getName() + "'一轮战斗信息 ---------- "
-                        + oneKickInfo);
 
                 // new一个"一次击打信息"的bean
                 oneKickData.setDescribe(oneKickInfo);
@@ -121,12 +115,15 @@ public class FightDataInfoController {
         if (hero.exp >= hero.currentLevelNeedExp()) {
             hero.exp -= hero.currentLevelNeedExp();
             hero.level++;
+            Hero.MAX_HP += Hero.MAX_HP_RISE;
             hero.setAttackValue(hero.getAttackValue() + Hero.ATR_RISE);
             hero.setDefenseValue(hero.getDefenseValue() + Hero.DEF_RISE);
             Log.i(TAG, "升级! 等级:" + (hero.level - 1) + "->" + hero.level);
-            Log.i(TAG, "升级! 攻击:" + (hero.getAttackValue() - Hero.ATR_RISE)
+            Log.i(TAG, "升级! 血上限:" + (Hero.MAX_HP - Hero.MAX_HP_RISE)
+                    + "->" + Hero.MAX_HP);
+            Log.i(TAG, "升级! 攻击力:" + (hero.getAttackValue() - Hero.ATR_RISE)
                     + "->" + hero.getAttackValue());
-            Log.i(TAG, "升级! 防御:" + (hero.getDefenseValue() - Hero.DEF_RISE)
+            Log.i(TAG, "升级! 防御力:" + (hero.getDefenseValue() - Hero.DEF_RISE)
                     + "->" + hero.getDefenseValue());
         }
     }

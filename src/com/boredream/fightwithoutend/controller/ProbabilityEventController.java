@@ -56,7 +56,6 @@ public class ProbabilityEventController {
                 realDropTreasures.add(treasure);
             }
         }
-        Log.i(TAG, "π÷ŒÔ:" + monster.getName() + "");
         return realDropTreasures;
     }
 

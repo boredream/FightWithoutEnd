@@ -49,8 +49,18 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
     // 英雄
     private Hero hero;
 
-    private TextView itembarContri;
-    private LinearLayout itemContri;
+    // 根信息栏
+    private TextView rootItemBarCharacter; // 按钮-人物
+    private TextView rootItemBarOther; // 按钮-其他
+
+    // 人物信息栏
+    private LinearLayout rootItemCharacter;
+
+    private TextView itembarContri; // 按钮-属性
+    private TextView itembarEquip; // 按钮-装备
+    private TextView itembarGoods; // 按钮-物品
+
+    private LinearLayout itemContri; // 主体内容-属性
     private TextView mainContriHp;
     private TextView mainContriAtt;
     private TextView mainContriDef;
@@ -58,15 +68,22 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
     private TextView mainContriNdExp;
     private TextView mainContriCurExp;
 
-    private TextView itembarEquip;
-    private LinearLayout itemEquip;
+    private LinearLayout itemEquip; // 主体内容-装备
     private TextView equipWeapon;
     private TextView equipArmor;
 
-    private TextView itembarGoods;
-    private LinearLayout itemGoods;
+    private LinearLayout itemGoods; // 主体内容-物品
     private ListView itemGoodsCountainer;
     private ItemGoodsAdapter itemGoodsAdapter;
+
+    // 其他信息栏
+    private LinearLayout rootItemOther;
+
+    private TextView itembarShop; // 按钮-商店
+    private TextView itembarMap; // 按钮-地图
+
+    private LinearLayout itemShop; // 主体内容-商店
+    private LinearLayout itemMap; // 主体内容-商店
 
     // 怪物
     private ArrayList<Monster> monsters;
@@ -97,9 +114,8 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
                      metMonInfo.setTextSize(fightInfoSize);
 
                      metMonInfo.setText("你遇到了 " + monster.getName());
+                     Log.i(TAG, "你遇到了:" + monster.getName());
                      mainInfoPlatform.addView(metMonInfo);
-                     // test
-                     System.out.println("你遇到了 " + monster.getName());
 
                      runOneTurn = FightDataInfoController.runOneTurn(monster);
 
@@ -117,9 +133,8 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
                          String oneKickStr = fightOneKickData.getDescribe();
                          // 将一次击打信息数据显示到页面中
                          oneKickInfo.setText(oneKickStr);
+                         Log.i(TAG, oneKickStr);
                          mainInfoPlatform.addView(oneKickInfo);
-                         // test
-                         System.out.println(oneKickStr);
                          if (FightOneKickData.M2H == oneKickType) {
                              mainContriHp.setText(heroCurrentHp + "");
                          }
@@ -128,6 +143,7 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
                      } else {
                          // 一轮战斗结束了
                          isOneTurnFinghting = false;
+                         Log.i(TAG, "战斗结束  isOneTurnFinghting=" + isOneTurnFinghting);
                          oneTurnIndex = 0;
                          mainContriHp.setText(Hero.MAX_HP + "");
                          mainContriCurExp.setText(hero.exp + "");
@@ -148,14 +164,10 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
                              dropTreasureInfo.setText(sb.toString());
                              dropTreasureInfo.setTextColor(Color.RED);
                              mainInfoPlatform.addView(dropTreasureInfo);
-                             // test
-                             System.out.println(sb.toString());
                          }
                          TextView fightEndSeparatorInfo = new TextView(MainGameActivity.this);
                          fightEndSeparatorInfo.setText("--------------------");
                          mainInfoPlatform.addView(fightEndSeparatorInfo);
-                         // test
-                         System.out.println("--------------------");
                      }
                  }
                  if (mainInfoPlatform.getChildCount() > fightInfoTotalCount) {
@@ -251,6 +263,7 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 MainGameActivity.this.finish();
+                                System.exit(0);
                             }
 
                         });
@@ -273,10 +286,18 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
     }
 
     private void initGameData() {
+        // 英雄
         hero = FightDataInfoController.hero;
-        // 属性
-        itembarContri = (TextView) findViewById(R.id.itembar_contribute);
-        itemContri = (LinearLayout) findViewById(R.id.item_contribute);
+        // 根信息栏
+        rootItemBarCharacter = (TextView) findViewById(R.id.root_itembar_character);
+        rootItemBarOther = (TextView) findViewById(R.id.root_itembar_other);
+        // ---- 人物信息栏
+        rootItemCharacter = (LinearLayout) findViewById(R.id.root_item_character);
+        itembarContri = (TextView) findViewById(R.id.character_itembar_contribute);
+        itembarEquip = (TextView) findViewById(R.id.character_itembar_equip);
+        itembarGoods = (TextView) findViewById(R.id.character_itembar_goods);
+        // ---- ---- 属性
+        itemContri = (LinearLayout) findViewById(R.id.character_item_contribute);
         mainContriHp = (TextView) findViewById(R.id.main_contri_hp);
         mainContriAtt = (TextView) findViewById(R.id.main_contri_att);
         mainContriDef = (TextView) findViewById(R.id.main_contri_def);
@@ -290,26 +311,37 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
         mainContriLv.setText(hero.level + "");
         mainContriNdExp.setText(hero.currentLevelNeedExp() + "");
         mainContriCurExp.setText(hero.exp + "");
-        // 装备
-        itembarEquip = (TextView) findViewById(R.id.itembar_equip);
-        itemEquip = (LinearLayout) findViewById(R.id.item_equip);
+        // ---- ---- 装备
+        itemEquip = (LinearLayout) findViewById(R.id.character_item_equip);
         equipWeapon = (TextView) findViewById(R.id.equip_weapon);
         equipArmor = (TextView) findViewById(R.id.equip_armor);
 
         equipWeapon.setText("无");
         equipArmor.setText("无");
-        // 物品
-        itembarGoods = (TextView) findViewById(R.id.itembar_goods);
-        itemGoods = (LinearLayout) findViewById(R.id.item_goods);
+        // ---- ---- 物品
+        itemGoods = (LinearLayout) findViewById(R.id.character_item_goods);
         itemGoodsCountainer = (ListView) findViewById(R.id.item_goods_container);
+
         itemGoodsAdapter = new ItemGoodsAdapter();
         itemGoodsCountainer.setAdapter(itemGoodsAdapter);
         itemGoodsCountainer.setOnItemClickListener(this);
+        // ---- 其他信息栏
+        rootItemOther = (LinearLayout) findViewById(R.id.root_item_other);
+        itembarShop = (TextView) findViewById(R.id.other_itembar_shop);
+        itembarMap = (TextView) findViewById(R.id.other_itembar_map);
+        // ---- ---- 商店
+        itemShop = (LinearLayout) findViewById(R.id.other_item_shop);
+        // ---- ---- 地图(待添加)
+        itemMap = (LinearLayout) findViewById(R.id.other_item_map);
 
         // itembar的点击监听
+        rootItemBarCharacter.setOnClickListener(this);
+        rootItemBarOther.setOnClickListener(this);
         itembarContri.setOnClickListener(this);
         itembarEquip.setOnClickListener(this);
         itembarGoods.setOnClickListener(this);
+        itembarShop.setOnClickListener(this);
+        itembarMap.setOnClickListener(this);
 
         monsters = Monster.getMonsters();
     }
@@ -333,9 +365,22 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
 
     @Override
     public void onClick(View v) {
+        Log.i(TAG, "onClick() -- " + v.getId() + " -- 点击了属性按钮");
         switch (v.getId()) {
-            case R.id.itembar_contribute:
-                Log.i(TAG, "onClick() -- R.id.itembar_contribute -- 点击了属性按钮");
+            case R.id.root_itembar_character:
+                rootItemBarCharacter.setBackgroundResource(R.color.current_item);
+                rootItemCharacter.setVisibility(View.VISIBLE);
+                rootItemBarOther.setBackgroundResource(R.color.transparent);
+                rootItemOther.setVisibility(View.GONE);
+                break;
+            case R.id.root_itembar_other:
+                rootItemBarCharacter.setBackgroundResource(R.color.transparent);
+                rootItemCharacter.setVisibility(View.GONE);
+                rootItemBarOther.setBackgroundResource(R.color.current_item);
+                rootItemOther.setVisibility(View.VISIBLE);
+                break;
+
+            case R.id.character_itembar_contribute:
                 itembarContri.setBackgroundResource(R.color.current_item);
                 itemContri.setVisibility(View.VISIBLE);
                 itembarEquip.setBackgroundResource(R.color.transparent);
@@ -344,8 +389,7 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
                 itemGoods.setVisibility(View.GONE);
                 break;
 
-            case R.id.itembar_equip:
-                Log.i(TAG, "onClick() -- R.id.itembar_equip -- 点击了装备按钮");
+            case R.id.character_itembar_equip:
                 itembarContri.setBackgroundResource(R.color.transparent);
                 itemContri.setVisibility(View.GONE);
                 itembarEquip.setBackgroundResource(R.color.current_item);
@@ -353,14 +397,26 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
                 itembarGoods.setBackgroundResource(R.color.transparent);
                 itemGoods.setVisibility(View.GONE);
                 break;
-            case R.id.itembar_goods:
-                Log.i(TAG, "onClick() -- R.id.itembar_goods -- 点击了物品按钮");
+            case R.id.character_itembar_goods:
                 itembarContri.setBackgroundResource(R.color.transparent);
                 itemContri.setVisibility(View.GONE);
                 itembarEquip.setBackgroundResource(R.color.transparent);
                 itemEquip.setVisibility(View.GONE);
                 itembarGoods.setBackgroundResource(R.color.current_item);
                 itemGoods.setVisibility(View.VISIBLE);
+                break;
+
+            case R.id.other_itembar_shop:
+                itembarShop.setBackgroundResource(R.color.current_item);
+                itemShop.setVisibility(View.VISIBLE);
+                itembarMap.setBackgroundResource(R.color.transparent);
+                itemMap.setVisibility(View.GONE);
+                break;
+            case R.id.other_itembar_map:
+                itembarShop.setBackgroundResource(R.color.transparent);
+                itemShop.setVisibility(View.GONE);
+                itembarMap.setBackgroundResource(R.color.current_item);
+                itemMap.setVisibility(View.VISIBLE);
                 break;
             default:
                 break;
