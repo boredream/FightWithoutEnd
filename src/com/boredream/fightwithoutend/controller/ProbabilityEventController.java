@@ -1,9 +1,10 @@
 
 package com.boredream.fightwithoutend.controller;
 
-import android.util.Log;
-
+import com.boredream.fightwithoutend.domain.FightOneKickData;
+import com.boredream.fightwithoutend.domain.Hero;
 import com.boredream.fightwithoutend.domain.Monster;
+import com.boredream.fightwithoutend.domain.Skill;
 import com.boredream.fightwithoutend.domain.Treasure;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class ProbabilityEventController {
 
     private static Random random = new Random();
 
-    private static int MAX_TREASURE_PROBABILITY = 100;
+    private static int MAX_PROBABILITY = 100;
 
     /**
      * 遇敌事件控制
@@ -52,11 +53,23 @@ public class ProbabilityEventController {
         List<Treasure> realDropTreasures = new ArrayList<Treasure>();
         for (Treasure treasure : possibleDropTreasures) {
             int dropProbability = treasure.getDropProbability();
-            if (random.nextInt(MAX_TREASURE_PROBABILITY) + 1 <= dropProbability) {
+            if (random.nextInt(MAX_PROBABILITY) + 1 <= dropProbability) {
                 realDropTreasures.add(treasure);
             }
         }
         return realDropTreasures;
+    }
+
+    /**
+     * 触发技能事件控制
+     * 
+     * @return true为触发
+     */
+    public static boolean triggerSkill(Skill skill) {
+        if (random.nextInt(MAX_PROBABILITY) + 1 <= skill.getOccurProbability()) {
+            return true;
+        }
+        return false;
     }
 
 }

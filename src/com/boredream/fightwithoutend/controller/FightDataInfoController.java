@@ -7,6 +7,7 @@ import com.boredream.fightwithoutend.domain.FightOneKickData;
 import com.boredream.fightwithoutend.domain.FightOneturnData;
 import com.boredream.fightwithoutend.domain.Hero;
 import com.boredream.fightwithoutend.domain.Monster;
+import com.boredream.fightwithoutend.domain.Skill;
 
 public class FightDataInfoController {
     private static final String TAG = "FightDataInfoController";
@@ -40,6 +41,13 @@ public class FightDataInfoController {
             oneKickData = new FightOneKickData();
             if (type == TYPE_H2M) {
                 h2mHarm = hero.getAttackValue() - monster.getDefenseValue();
+                if (ProbabilityEventController.triggerSkill(hero.getCurrentAttSkill())) {
+                    if (hero.getCurrentAttSkill().getSkillEffect() == Skill.SE_ATT_HARM_ADDITION) {
+                        h2mHarm *= hero.getCurrentAttSkill().getHarmAdditionValue();
+                    }
+                    Log.i(TAG, "触发了倍击,造成 " + h2mHarm + "点伤害(" +
+                            hero.getCurrentAttSkill().getHarmAdditionValue() + "倍)");
+                }
                 if (h2mHarm < 0) {
                     h2mHarm = 0;
                 }
@@ -115,6 +123,7 @@ public class FightDataInfoController {
         if (hero.exp >= hero.currentLevelNeedExp()) {
             hero.exp -= hero.currentLevelNeedExp();
             hero.level++;
+            hero.sp += Hero.SP_RISE;
             Hero.MAX_HP += Hero.MAX_HP_RISE;
             hero.setAttackValue(hero.getAttackValue() + Hero.ATR_RISE);
             hero.setDefenseValue(hero.getDefenseValue() + Hero.DEF_RISE);

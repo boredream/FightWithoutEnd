@@ -6,14 +6,20 @@ import java.util.List;
 
 public class Skill {
 
+    // 技能总类别Type
     public static final int TYPE_ATTRACT = 11;
     public static final int TYPE_DEFENSE = 12;
+
+    // 技能具体效果SkillEffect(SE)
+    public static final int SE_ATT_HARM_ADDITION = 101; // 伤害加成
+    public static final int SE_DEF_BLOCK = 201; // 格挡
 
     private int id;
     private String name;
     private int type;
     private int occurProbability; // 触发几率,百分比数值控制触发
     private int level;
+    private int skillEffect; // 技能具体效果
 
     public int getId() {
         return id;
@@ -43,12 +49,30 @@ public class Skill {
         this.level = level;
     }
 
-    public Skill(int id, String name, int type, int occurProbability) {
+    public int getSkillEffect() {
+        return skillEffect;
+    }
+
+    /**
+     * 获得攻击加成指数
+     * 
+     * @return
+     */
+    public int getHarmAdditionValue() {
+        if (id == 1) { // 倍击
+            // 例如:重击等级为3,则伤害加成为 1.0 + 3*1 = 4倍
+            return 1 + level;
+        }
+        return 1;
+    }
+
+    public Skill(int id, String name, int type, int skillEffect, int occurProbability) {
         super();
         this.id = id;
         this.name = name;
         this.type = type;
         this.occurProbability = occurProbability;
+        this.skillEffect = skillEffect;
         this.level = 1;
     }
 
@@ -94,8 +118,8 @@ public class Skill {
 
     public static List<Skill> getAllSkills() {
         List<Skill> allSkills = new ArrayList<Skill>();
-        Skill skill1 = new Skill(1, "重击", TYPE_ATTRACT, 20);
-        Skill skill2 = new Skill(2, "格挡", TYPE_DEFENSE, 10);
+        Skill skill1 = new Skill(1, "倍击", TYPE_ATTRACT, SE_ATT_HARM_ADDITION, 10);
+        Skill skill2 = new Skill(2, "格挡", TYPE_DEFENSE, SE_DEF_BLOCK, 10);
         allSkills.add(skill1);
         allSkills.add(skill2);
         return allSkills;

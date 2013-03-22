@@ -14,6 +14,8 @@ public class Hero {
 
     // 血上限成长
     public static final int MAX_HP_RISE = 5;
+    // SP点成长
+    public static final int SP_RISE = 2;
     // 攻击成长
     public static final int ATR_RISE = 2;
     // 防御成长
@@ -23,10 +25,13 @@ public class Hero {
     private int hp;
     private int attrackValue;
     private int defenseValue;
-    private List<Skill> possibleLearnSkill; // 可能学会的技能
-    private List<Skill> existSkill; // 已有的技能
     public int level;
     public int exp;
+    public int sp;
+    // private List<Skill> possibleLearnSkill; // 可能学会的技能
+    private List<Skill> existSkill; // 已有的技能
+    private Skill currentAttSkill;
+    private Skill currentDefSkill;
     public List<Treasure> totalObtainTreasure;
     public Treasure currentWeapon;
     public Treasure currentArmor;
@@ -71,6 +76,46 @@ public class Hero {
         this.defenseValue = defenseValue;
     }
 
+    public List<Skill> getExistSkill() {
+        return existSkill;
+    }
+
+    /**
+     * 获取当前英雄的攻击技能
+     * 
+     * @return
+     */
+    public Skill getCurrentAttSkill() {
+        if (currentAttSkill != null) {
+            return currentAttSkill;
+        }
+        for (Skill skill : existSkill) {
+            int t = skill.getType();
+            if (t == Skill.TYPE_ATTRACT) {
+                currentAttSkill = skill;
+            }
+        }
+        return currentAttSkill;
+    }
+
+    /**
+     * 获取当前英雄的防御技能
+     * 
+     * @return
+     */
+    public Skill getCurrentDefSkill() {
+        if (currentDefSkill != null) {
+            return currentDefSkill;
+        }
+        for (Skill skill : existSkill) {
+            int t = skill.getType();
+            if (t == Skill.TYPE_DEFENSE) {
+                currentDefSkill = skill;
+            }
+        }
+        return currentDefSkill;
+    }
+
     private Hero(String name, int hp, int attackValue, int defenseValue, int level, int exp) {
         super();
         this.name = name;
@@ -91,7 +136,8 @@ public class Hero {
         Hero hero = new Hero("勇士a", MAX_HP, 10, 5, 0, 0);
         hero.totalObtainTreasure = new ArrayList<Treasure>();
         hero.existSkill = new ArrayList<Skill>();
-        hero.possibleLearnSkill = Skill.getAllSkills();
+        hero.existSkill = Skill.getAllSkills();
+        hero.sp = 5;
         return hero;
     }
 
@@ -179,4 +225,21 @@ public class Hero {
         hp = MAX_HP;
     }
 
+    /**
+     * 技能等级提升
+     * 
+     * @param skill 需要提升的技能
+     * @return 提升后的技能等级
+     */
+    public int riseSkill(Skill skill) {
+        // 如果具备这个技能
+        if (existSkill.contains(skill)) {
+            // 如果英雄的sp点足够技能提升所需sp
+            if (sp >= skill.getSp4rise()) {
+                sp -= skill.getSp4rise();
+                skill.setLevel(skill.getLevel() + 1);
+            }
+        }
+        return skill.getLevel();
+    }
 }
