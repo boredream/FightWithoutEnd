@@ -98,11 +98,11 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
     private ArrayList<Monster> monsters;
     private Monster monster;
 
-    private GameThread gameThread;
-
     private boolean gameThreadRunning;
     // 是否正在进行一轮战斗,是 正在进行;否 战斗已经结束
     private boolean isOneTurnFinghting = false;
+
+    private GameThread gameThread;
 
     private FightOneturnData runOneTurn = null;
     private int oneTurnIndex = 0;
@@ -112,16 +112,13 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
         @Override
         public void handleMessage(Message msg) {
 
-            monster = getMonster();
-
             switch (msg.what) {
                 case 10:
                  if (!isOneTurnFinghting) {
-                     // 随即获取一个怪物
+                     monster = getMonster();
 
                      TextView metMonInfo = new TextView(MainGameActivity.this);
                      metMonInfo.setTextSize(fightInfoSize);
-
                      metMonInfo.setText("你遇到了 " + monster.getName());
                      Log.i(TAG, "你遇到了:" + monster.getName());
                      mainInfoPlatform.addView(metMonInfo);
@@ -134,18 +131,15 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
                      // 如果一轮战斗信息没有显示完(一轮战斗尚未结束)
                      if (oneTurnIndex < runOneTurn.oneKickData.size()) {
                          TextView oneKickInfo = new TextView(MainGameActivity.this);
-                         // 获取一次击打信息,保存一次击打信息数据
+                         // 获取本轮战斗的一次击打信息
                          FightOneKickData fightOneKickData = runOneTurn.oneKickData
                                  .get(oneTurnIndex);
-                         int oneKickType = fightOneKickData.getHarmType();
-                         int heroCurrentHp = fightOneKickData.getHeroCurrentHp();
-                         String oneKickStr = fightOneKickData.getDescribe();
                          // 将一次击打信息数据显示到页面中
-                         oneKickInfo.setText(oneKickStr);
-                         Log.i(TAG, oneKickStr);
+                         oneKickInfo.setText(fightOneKickData.getDescribe());
+                         Log.i(TAG, fightOneKickData.getDescribe());
                          mainInfoPlatform.addView(oneKickInfo);
-                         if (FightOneKickData.M2H == oneKickType) {
-                             mainContriHp.setText(heroCurrentHp + "");
+                         if (FightOneKickData.M2H == fightOneKickData.getHarmType()) {
+                             mainContriHp.setText(fightOneKickData.getHeroCurrentHp() + "");
                          }
                          // 遍历到下一次击打
                          oneTurnIndex++;
@@ -161,7 +155,7 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
                          // 掉落装备,只有英雄胜利时才会触发
                          if (runOneTurn.getFightOutcome() == FightOneturnData.FIGHT_OUTCOME_HERO_IS_WIN) {
                              TextView dropTreasureInfo = new TextView(MainGameActivity.this);
-                             List<Treasure> dropTreasures = runOneTurn.getTreasureGaint();
+                             List<Treasure> dropTreasures = runOneTurn.getDropTreasures();
                              StringBuilder sb = new StringBuilder();
                              for (int i = 0; i < dropTreasures.size(); i++) {
                                  if (i != 0) {
@@ -193,7 +187,12 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
 
     };
 
-    // SrcollView滚之最底部
+    /**
+     * SrcollView战斗信息栏滚到最底部
+     * 
+     * @param scroll
+     * @param inner
+     */
     public void scrollToBottom(final View scroll, final View inner) {
 
         Handler mHandler = new Handler();
@@ -214,12 +213,20 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
         });
     }
 
-    protected Monster getMonster() {
+    /**
+     * 获取一个怪物
+     * <p>
+     * 没有怪物,战斗结束(人或怪物死了)时,随即遭遇一个新的怪物;
+     * </p>
+     * 
+     * @return
+     */
+    private Monster getMonster() {
         if (monster == null) {
-            monster = ProbabilityEventController.encounterMonster(monsters);
+            monster = ProbabilityEventController.encounterNewMonster(monsters);
         } else {
             if (monster.getHp() <= 0 || hero.getHp() <= 0) {
-                monster = ProbabilityEventController.encounterMonster(monsters);
+                monster = ProbabilityEventController.encounterNewMonster(monsters);
             }
         }
         return monster;
@@ -233,9 +240,6 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
         Log.i(TAG, "start game~");
 
         initGameData();
-
-        mainInfoSv = (ScrollView) findViewById(R.id.main_info_sv);
-        mainInfoPlatform = (LinearLayout) findViewById(R.id.main_info_ll);
 
         gameThreadRunning = true;
         gameThread = new GameThread();
@@ -252,28 +256,7 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
-                AlertDialog dialog = new Builder(this).create();
-                dialog.setTitle("是否退出游戏");
-                dialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定",
-                        new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                MainGameActivity.this.finish();
-                                System.exit(0);
-                            }
-
-                        });
-                dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消",
-                        new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-
-                        });
-                dialog.show();
+                showExitDialog();
                 return true;
 
             default:
@@ -282,9 +265,40 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
         return super.onKeyDown(keyCode, event);
     }
 
+    /**
+     * 弹出退出程序提示框
+     */
+    private void showExitDialog() {
+        AlertDialog dialog = new Builder(this).create();
+        dialog.setTitle("是否退出游戏");
+        dialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定",
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        MainGameActivity.this.finish();
+                        System.exit(0);
+                    }
+
+                });
+        dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消",
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+
+                });
+        dialog.show();
+    }
+
     private void initGameData() {
         // 英雄
         hero = FightDataInfoController.hero;
+        // 左侧战斗信息
+        mainInfoSv = (ScrollView) findViewById(R.id.main_info_sv);
+        mainInfoPlatform = (LinearLayout) findViewById(R.id.main_info_ll);
         // 根信息栏
         rootItemBarCharacter = (TextView) findViewById(R.id.root_itembar_character);
         rootItemBarOther = (TextView) findViewById(R.id.root_itembar_other);
@@ -489,7 +503,8 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
 
                 @Override
                 public void onClick(View v) {
-                    hero.riseSkill(skill);
+                    // hero.riseSkill(skill);
+                    FightDataInfoController.riseHeroSkill(skill);
                     mainContriSp.setText(hero.sp + "");
                     Log.i(TAG, "the skill " + skill.getName() + "'lv is up : "
                             + (skill.getLevel() - 1) + "->" + skill.getLevel());
@@ -510,7 +525,7 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
 
         @Override
         public int getCount() {
-            return hero.totalObtainTreasure.size();
+            return Hero.MAX_GOODS_COUNT;
         }
 
         @Override
@@ -552,7 +567,7 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
             Log.i(TAG, "onItemClick() -- position=" + position +
                     ";obj=" + itemGoodsAdapter.getItem(position));
             Treasure treasure = itemGoodsAdapter.getItem(position);
-            hero.equip(treasure);
+            FightDataInfoController.equip(treasure);
             if (hero.currentWeapon != null) {
                 equipWeapon.setText(hero.currentWeapon.getName());
             }

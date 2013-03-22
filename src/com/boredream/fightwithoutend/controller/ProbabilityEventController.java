@@ -30,7 +30,7 @@ public class ProbabilityEventController {
      * @param currentAllMonsters 当前可以遇到的所有怪物
      * @return 遇到哪个怪物
      */
-    public static Monster encounterMonster(ArrayList<Monster> currentAllMonsters) {
+    public static Monster encounterNewMonster(ArrayList<Monster> currentAllMonsters) {
         int totalEncounterPros = 0;
         List<Monster> totalMons = new ArrayList<Monster>();
         for (Monster monster : currentAllMonsters) {

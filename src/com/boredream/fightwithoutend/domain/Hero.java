@@ -9,6 +9,8 @@ import java.util.List;
 public class Hero {
     private static final String TAG = "Hero";
 
+    public static int MAX_GOODS_COUNT = 50;
+
     // 血上限
     public static int MAX_HP = 20;
 
@@ -141,32 +143,6 @@ public class Hero {
         return hero;
     }
 
-    public void equip(Treasure treasure) {
-        if (treasure.getEquipLocation() == Treasure.EQUIP_LOCATION_WEAPON) {
-            // 当前装备非空时,先将当前装备移回物品栏,把当前装备清空
-            if (currentWeapon != null) {
-                Log.i(TAG, "equip(" + treasure + ") -- 卸下武器");
-                totalObtainTreasure.add(currentWeapon);
-                currentWeapon = null;
-            }
-            // 再将新的装备换上,而当前装备为空时,则直接跳过以上过程
-            totalObtainTreasure.remove(treasure);
-            currentWeapon = treasure;
-            Log.i(TAG, "equip(" + treasure + ") -- 装备上武器");
-        } else {
-            // 当前装备非空时,先将当前装备移回物品栏,把当前装备清空
-            if (currentArmor != null) {
-                Log.i(TAG, "equip(" + treasure + ") -- 卸下防具");
-                totalObtainTreasure.add(currentArmor);
-                currentArmor = null;
-            }
-            // 再将新的装备换上,而当前装备为空时,则直接跳过以上过程
-            totalObtainTreasure.remove(treasure);
-            currentArmor = treasure;
-            Log.i(TAG, "equip(" + treasure + ") -- 装备上防具");
-        }
-    }
-
     public int currentLevelNeedExp() {
         return exps4LevelRise()[level];
     }
@@ -225,21 +201,4 @@ public class Hero {
         hp = MAX_HP;
     }
 
-    /**
-     * 技能等级提升
-     * 
-     * @param skill 需要提升的技能
-     * @return 提升后的技能等级
-     */
-    public int riseSkill(Skill skill) {
-        // 如果具备这个技能
-        if (existSkill.contains(skill)) {
-            // 如果英雄的sp点足够技能提升所需sp
-            if (sp >= skill.getSp4rise()) {
-                sp -= skill.getSp4rise();
-                skill.setLevel(skill.getLevel() + 1);
-            }
-        }
-        return skill.getLevel();
-    }
 }

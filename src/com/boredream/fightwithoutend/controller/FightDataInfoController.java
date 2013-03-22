@@ -8,6 +8,9 @@ import com.boredream.fightwithoutend.domain.FightOneturnData;
 import com.boredream.fightwithoutend.domain.Hero;
 import com.boredream.fightwithoutend.domain.Monster;
 import com.boredream.fightwithoutend.domain.Skill;
+import com.boredream.fightwithoutend.domain.Treasure;
+
+import java.util.List;
 
 public class FightDataInfoController {
     private static final String TAG = "FightDataInfoController";
@@ -60,7 +63,9 @@ public class FightDataInfoController {
                     oneKickInfo += "\n\"怪物:" + monster.getName()
                             + "\"的生命降为0,你胜利了!";
                     oneturnData.setFightOutcome(FightOneturnData.FIGHT_OUTCOME_HERO_IS_WIN);
-                    oneturnData.addTreasureGaint(ProbabilityEventController.dropTreasure(monster));
+                    List<Treasure> dropTreasures = ProbabilityEventController.dropTreasure(monster);
+                    oneturnData.setDropTreasures(dropTreasures);
+                    pickTreasures(dropTreasures);
                 } else {
                     type = TYPE_M2H;
                 }
@@ -103,12 +108,100 @@ public class FightDataInfoController {
         return oneturnData;
     }
 
+    public static void equip(Treasure treasure) {
+        if (treasure.getEquipLocation() == Treasure.EQUIP_LOCATION_WEAPON) {
+            // 当前装备非空时,先将当前装备移回物品栏,把当前装备清空
+            if (hero.currentWeapon != null) {
+                Log.i(TAG, "equip(" + treasure + ") -- 卸下武器");
+                hero.totalObtainTreasure.add(hero.currentWeapon);
+                hero.currentWeapon = null;
+            }
+            // 再将新的装备换上,而当前装备为空时,则直接跳过以上过程
+            hero.totalObtainTreasure.remove(treasure);
+            hero.currentWeapon = treasure;
+            Log.i(TAG, "equip(" + treasure + ") -- 装备上武器");
+        } else {
+            // 当前装备非空时,先将当前装备移回物品栏,把当前装备清空
+            if (hero.currentArmor != null) {
+                Log.i(TAG, "equip(" + treasure + ") -- 卸下防具");
+                hero.totalObtainTreasure.add(hero.currentArmor);
+                hero.currentArmor = null;
+            }
+            // 再将新的装备换上,而当前装备为空时,则直接跳过以上过程
+            hero.totalObtainTreasure.remove(treasure);
+            hero.currentArmor = treasure;
+            Log.i(TAG, "equip(" + treasure + ") -- 装备上防具");
+        }
+    }
+
+    /**
+     * 提升英雄某个技能的等级
+     * 
+     * @param skill 需要提升的技能
+     * @return 提升后的技能等级
+     */
+    public static int riseHeroSkill(Skill skill) {
+        int skillLevel = skill.getLevel();
+        if (hero.sp >= skill.getSp4rise()) {
+            hero.sp -= skill.getSp4rise();
+            skill.setLevel(skillLevel + 1);
+        }
+        return skillLevel;
+    }
+
+    /**
+     * 捡取宝物
+     * 
+     * @param dropTreasure
+     */
+    private static void pickTreasures(List<Treasure> dropTreasures) {
+
+        // 包袱里东西到50时,不再捡取
+        if (hero.totalObtainTreasure != null
+                && hero.totalObtainTreasure.size() > Hero.MAX_GOODS_COUNT) {
+            return;
+        }
+
+        if (!heroIsWin) {
+            return;
+        }
+
+        if (dropTreasures.size() >= 2) {
+            Log.i(TAG, "一次掉落2个以上道具");
+        }
+        for (Treasure treasure : dropTreasures) {
+            // 如果英雄胜利了,并且包袱里没有这个宝物,则捡取
+            if (!containsTreasures(hero.totalObtainTreasure, treasure)) {
+                hero.totalObtainTreasure.add(treasure);
+                Log.i(TAG, "捡取道具:" + treasure.getName());
+            }
+        }
+
+    }
+
+    /**
+     * 包袱中是否已经包含了此宝物
+     * 
+     * @param treasureGaint 包袱内的宝物
+     * @param dropTreasures 需要检测是否已有的目标宝物
+     * @return
+     */
+    private static boolean containsTreasures(List<Treasure> treasureGaint, Treasure targetTreasures) {
+
+        for (Treasure treasure : treasureGaint) {
+            if (treasure.getId() == targetTreasures.getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * 经验提升
      * 
      * @param oneturnData 一轮战斗信息
      */
-    public static void expRise(FightOneturnData oneturnData) {
+    private static void expRise(FightOneturnData oneturnData) {
         int expGaint = oneturnData.getExpGaint();
         hero.exp += expGaint;
         Log.i(TAG, "获得经验:" + expGaint);
@@ -118,7 +211,7 @@ public class FightDataInfoController {
     /**
      * 检验当前经验是否足够升级
      */
-    public static void checkLevelRise() {
+    private static void checkLevelRise() {
         // 经验足够,升级
         if (hero.exp >= hero.currentLevelNeedExp()) {
             hero.exp -= hero.currentLevelNeedExp();
@@ -136,4 +229,5 @@ public class FightDataInfoController {
                     + "->" + hero.getDefenseValue());
         }
     }
+
 }
