@@ -150,6 +150,34 @@ public class FightDataInfoController {
     }
 
     /**
+     * 装备强化加星数据处理方法
+     * 
+     * @param treasure
+     * @return
+     */
+    public static int riseTreasureStar(Treasure treasure) {
+
+        int riseStarResult = ProbabilityEventController.riseTreasureStar(treasure);
+        switch (riseStarResult) {
+            case Treasure.RISE_STAR_SUCCESS:
+                treasure.setStar(treasure.getStar() + 1);
+                break;
+            case Treasure.RISE_STAR_BREAK:
+                hero.totalObtainTreasure.remove(treasure);
+                break;
+            case Treasure.RISE_STAR_NO_CHANGE:
+                // nothing
+                Log.i(TAG, "rise star - no change");
+                break;
+
+            default:
+                break;
+        }
+
+        return riseStarResult;
+    }
+
+    /**
      * 捡取宝物
      * 
      * @param dropTreasure

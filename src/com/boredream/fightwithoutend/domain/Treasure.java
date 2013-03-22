@@ -14,6 +14,10 @@ public class Treasure {
     public static final int EQUIP_LOCATION_WEAPON = 1; // 武器
     public static final int EQUIP_LOCATION_ARMOR = 2; // 防具
 
+    public static final int RISE_STAR_SUCCESS = 11;
+    public static final int RISE_STAR_BREAK = 12;
+    public static final int RISE_STAR_NO_CHANGE = 13;
+
     private static List<Treasure> allTreasures;
 
     private int id;
@@ -22,6 +26,7 @@ public class Treasure {
     private int defAddition;// 负值时即为减少
     private int equipLocation;
     private int dropProbability;
+    private int star;// 装备加星
 
     public int getId() {
         return id;
@@ -63,6 +68,42 @@ public class Treasure {
         this.dropProbability = dropProbability;
     }
 
+    public int getStar() {
+        return star;
+    }
+
+    public void setStar(int star) {
+        this.star = star;
+    }
+
+    public int getStarRiseProbility() {
+        int probility = 0;
+        switch (star) {
+            case 1:
+                probility = 80;
+                break;
+            case 2:
+                probility = 70;
+                break;
+            case 3:
+                probility = 50;
+                break;
+            case 4:
+                probility = 30;
+                break;
+            case 5:
+                probility = 15;
+                break;
+            case 6:
+                probility = 5;
+                break;
+            default:
+                probility = 0;
+                break;
+        }
+        return probility;
+    }
+
     /**
      * 获取装备位置
      * 
@@ -84,6 +125,7 @@ public class Treasure {
         this.attAddition = attAddition;
         this.defAddition = defAddition;
         this.dropProbability = dropProbability;
+        this.star = 1;
     }
 
     @Override
