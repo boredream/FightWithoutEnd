@@ -1,8 +1,6 @@
 
 package com.boredream.fightwithoutend.controller;
 
-import com.boredream.fightwithoutend.domain.FightOneKickData;
-import com.boredream.fightwithoutend.domain.Hero;
 import com.boredream.fightwithoutend.domain.Monster;
 import com.boredream.fightwithoutend.domain.Skill;
 import com.boredream.fightwithoutend.domain.Treasure;
@@ -17,8 +15,6 @@ import java.util.Random;
  * @author boredream
  */
 public class ProbabilityEventController {
-
-    private static final String TAG = null;
 
     private static Random random = new Random();
 

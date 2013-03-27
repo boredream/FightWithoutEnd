@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="100dp"
         android:text="无尽的战斗"
         android:textSize="50sp" />
 
@@ -29,8 +29,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/menu_version_tv"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="60dp"
         android:text="开 始 游 戏"
+        android:textSize="40sp" />
+    
+    <Button
+        android:id="@+id/menu_load"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/menu_start"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="读取存档"
         android:textSize="40sp" />
 
 </RelativeLayout>

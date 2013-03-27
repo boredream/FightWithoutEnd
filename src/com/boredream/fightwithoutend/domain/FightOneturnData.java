@@ -4,9 +4,13 @@ package com.boredream.fightwithoutend.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 一轮战斗信息
+ * 
+ * @author boredream
+ *
+ */
 public class FightOneturnData {
-
-    private static final String TAG = "FightOneturnData";
 
     public static final int FIGHT_OUTCOME_HERO_IS_WIN = 110;
     public static final int FIGHT_OUTCOME_MONSTER_IS_WIN = 119;

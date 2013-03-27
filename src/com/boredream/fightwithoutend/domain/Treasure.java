@@ -1,6 +1,7 @@
 
 package com.boredream.fightwithoutend.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  * 
  * @author boredream
  */
-public class Treasure {
+public class Treasure implements Serializable {
 
     public static final int EQUIP_LOCATION_WEAPON = 1; // ÎäÆ÷
     public static final int EQUIP_LOCATION_ARMOR = 2; // ·À¾ß

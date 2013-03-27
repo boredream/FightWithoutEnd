@@ -1,6 +1,12 @@
 
 package com.boredream.fightwithoutend.domain;
 
+/**
+ * 一次击打信息
+ * 
+ * @author boredream
+ *
+ */
 public class FightOneKickData {
 
     public static final int DEFAULT = -1;

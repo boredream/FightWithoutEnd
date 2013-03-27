@@ -4,6 +4,12 @@ package com.boredream.fightwithoutend.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ¹ÖÎï
+ * 
+ * @author boredream
+ *
+ */
 public class Monster {
 
     private int id;

@@ -6,11 +6,14 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -20,8 +23,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.boredream.fightwithoutend.R;
 import com.boredream.fightwithoutend.controller.FightDataInfoController;
@@ -30,8 +35,10 @@ import com.boredream.fightwithoutend.domain.FightOneKickData;
 import com.boredream.fightwithoutend.domain.FightOneturnData;
 import com.boredream.fightwithoutend.domain.Hero;
 import com.boredream.fightwithoutend.domain.Monster;
+import com.boredream.fightwithoutend.domain.Record;
 import com.boredream.fightwithoutend.domain.Skill;
 import com.boredream.fightwithoutend.domain.Treasure;
+import com.boredream.fightwithoutend.view.RecordDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -294,8 +301,14 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
     }
 
     private void initGameData() {
+        Record record = (Record) getIntent().getSerializableExtra("record");
         // 英雄
-        hero = FightDataInfoController.hero;
+        if (record != null) {
+            hero = record.getHeroInfo();
+        } else {
+            hero = Hero.initHero();
+        }
+        FightDataInfoController.hero = hero;
         // 左侧战斗信息
         mainInfoSv = (ScrollView) findViewById(R.id.main_info_sv);
         mainInfoPlatform = (LinearLayout) findViewById(R.id.main_info_ll);
@@ -525,7 +538,10 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
 
         @Override
         public int getCount() {
-            return Hero.MAX_GOODS_COUNT;
+            // if (hero.totalObtainTreasure.size() > Hero.MAX_GOODS_COUNT) {
+            // return Hero.MAX_GOODS_COUNT;
+            // }
+            return hero.totalObtainTreasure.size();
         }
 
         @Override
@@ -566,17 +582,23 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
         if (parent == itemGoodsCountainer) {
             Log.i(TAG, "onItemClick() -- position=" + position +
                     ";obj=" + itemGoodsAdapter.getItem(position));
-            Treasure treasure = itemGoodsAdapter.getItem(position);
-            FightDataInfoController.equip(treasure);
-            if (hero.currentWeapon != null) {
-                equipWeapon.setText(hero.currentWeapon.getName());
-            }
-            if (hero.currentArmor != null) {
-                equipArmor.setText(hero.currentArmor.getName());
-            }
-            mainContriAtt.setText(hero.getAttackValue() + "");
-            mainContriDef.setText(hero.getDefenseValue() + "");
-            itemGoodsAdapter.notifyDataSetChanged();
+            PopupWindow pw = new PopupWindow(
+                    View.inflate(MainGameActivity.this, R.layout.treasure_item_click_pw, null),
+                    80, 25, true);
+            ColorDrawable drawable = new ColorDrawable(-00000);
+            pw.setBackgroundDrawable(drawable);
+            pw.showAsDropDown(view, 0, 0);
+            // Treasure treasure = itemGoodsAdapter.getItem(position);
+            // FightDataInfoController.equip(treasure);
+            // if (hero.currentWeapon != null) {
+            // equipWeapon.setText(hero.currentWeapon.getName());
+            // }
+            // if (hero.currentArmor != null) {
+            // equipArmor.setText(hero.currentArmor.getName());
+            // }
+            // mainContriAtt.setText(hero.getAttackValue() + "");
+            // mainContriDef.setText(hero.getDefenseValue() + "");
+            // itemGoodsAdapter.notifyDataSetChanged();
         }
         // 技能item点击
         else if (parent == itemSkillCountainer) {
@@ -585,4 +607,27 @@ public class MainGameActivity extends Activity implements OnClickListener, OnIte
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_record:
+                RecordDialog dialog = new RecordDialog(
+                        MainGameActivity.this, MainGameActivity.this);
+                dialog.show();
+                break;
+            case R.id.menu_settings:
+                Toast.makeText(this, "尚未开放", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

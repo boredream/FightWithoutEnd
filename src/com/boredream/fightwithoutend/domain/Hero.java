@@ -1,13 +1,17 @@
 
 package com.boredream.fightwithoutend.domain;
 
-import android.util.Log;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hero {
-    private static final String TAG = "Hero";
+/**
+ * Ó¢ÐÛ
+ * 
+ * @author boredream
+ *
+ */
+public class Hero implements Serializable {
 
     public static int MAX_GOODS_COUNT = 50;
 
@@ -118,6 +122,15 @@ public class Hero {
         return currentDefSkill;
     }
 
+    public static Hero initHero() {
+        Hero hero = new Hero("ÓÂÊ¿a", MAX_HP, 10, 5, 0, 0);
+        hero.totalObtainTreasure = new ArrayList<Treasure>();
+        hero.existSkill = new ArrayList<Skill>();
+        hero.existSkill = Skill.getAllSkills();
+        hero.sp = 5;
+        return hero;
+    }
+
     private Hero(String name, int hp, int attackValue, int defenseValue, int level, int exp) {
         super();
         this.name = name;
@@ -132,15 +145,6 @@ public class Hero {
     public String toString() {
         return "Hero [name=" + name + ", hp=" + hp + ", attackValue=" + attrackValue
                 + ", defenseValue=" + defenseValue + ", level=" + level + ", exp=" + exp + "]";
-    }
-
-    public static Hero initHero() {
-        Hero hero = new Hero("ÓÂÊ¿a", MAX_HP, 10, 5, 0, 0);
-        hero.totalObtainTreasure = new ArrayList<Treasure>();
-        hero.existSkill = new ArrayList<Skill>();
-        hero.existSkill = Skill.getAllSkills();
-        hero.sp = 5;
-        return hero;
     }
 
     public int currentLevelNeedExp() {

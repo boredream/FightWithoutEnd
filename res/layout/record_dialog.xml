@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dip"
+    android:layout_height="350dip"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/record_dialog_save1"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:background="#fff"
+        android:clickable="true" >
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:background="@color/light_blue"
+            android:gravity="center"
+            android:text="save1"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="10dp"
+            android:text="英雄名:" />
+
+        <TextView
+            android:id="@+id/record_dialog_save1_heroname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="130dp"
+            android:layout_marginTop="10dp"
+            android:text="勇士1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="40dp"
+            android:text="游戏时间:" />
+
+        <TextView
+            android:id="@+id/record_dialog_save1_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="145dp"
+            android:layout_marginTop="40dp"
+            android:text="10000" />
+
+        <TextView
+            android:id="@+id/record_dialog_save1_none"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#fff"
+            android:gravity="center"
+            android:text="空 白 存 档"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+        <FrameLayout
+            android:id="@+id/record_dialog_save1_blur"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/light_orange"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#000" />
+
+    <RelativeLayout
+        android:id="@+id/record_dialog_save2"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:background="#fff"
+        android:clickable="true" >
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:background="@color/light_blue"
+            android:gravity="center"
+            android:text="save2"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="10dp"
+            android:text="英雄名:" />
+
+        <TextView
+            android:id="@+id/record_dialog_save2_heroname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="130dp"
+            android:layout_marginTop="10dp"
+            android:text="勇士2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="40dp"
+            android:text="游戏时间:" />
+
+        <TextView
+            android:id="@+id/record_dialog_save2_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="145dp"
+            android:layout_marginTop="40dp"
+            android:text="11300" />
+
+        <TextView
+            android:id="@+id/record_dialog_save2_none"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#fff"
+            android:gravity="center"
+            android:text="空 白 存 档"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+        <FrameLayout
+            android:id="@+id/record_dialog_save2_blur"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/light_orange"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#000" />
+
+    <RelativeLayout
+        android:id="@+id/record_dialog_save3"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:background="#fff"
+        android:clickable="true" >
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:background="@color/light_blue"
+            android:gravity="center"
+            android:text="save3"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="10dp"
+            android:text="英雄名:" />
+
+        <TextView
+            android:id="@+id/record_dialog_save3_heroname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="130dp"
+            android:layout_marginTop="10dp"
+            android:text="勇士3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="40dp"
+            android:text="游戏时间:" />
+
+        <TextView
+            android:id="@+id/record_dialog_save3_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="145dp"
+            android:layout_marginTop="40dp"
+            android:text="17020" />
+
+        <TextView
+            android:id="@+id/record_dialog_save3_none"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#fff"
+            android:gravity="center"
+            android:text="空 白 存 档"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+        <FrameLayout
+            android:id="@+id/record_dialog_save3_blur"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/light_orange"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/record_dialog_save"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:text="存档" />
+
+        <Button
+            android:id="@+id/record_dialog_load"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:text="读档" />
+
+        <Button
+            android:id="@+id/record_dialog_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:text="取消" />
+    </LinearLayout>
+
+</LinearLayout>

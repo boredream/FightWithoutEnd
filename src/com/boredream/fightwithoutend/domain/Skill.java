@@ -1,10 +1,17 @@
 
 package com.boredream.fightwithoutend.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Skill {
+/**
+ * 技能
+ * 
+ * @author boredream
+ *
+ */
+public class Skill implements Serializable {
 
     // 技能总类别Type
     public static final int TYPE_ATTRACT = 11;

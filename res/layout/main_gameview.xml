@@ -69,6 +69,7 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
+            android:layout_alignLeft="@id/main_root_itembar"
             android:layout_below="@id/main_root_itembar"
             android:background="#fff" />
 
@@ -144,7 +145,7 @@
 
                 <LinearLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="35dp"
                     android:orientation="horizontal" >
 
                     <TextView
@@ -164,7 +165,7 @@
 
                 <LinearLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="35dp"
                     android:orientation="horizontal" >
 
                     <TextView
@@ -184,7 +185,7 @@
 
                 <LinearLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="35dp"
                     android:orientation="horizontal" >
 
                     <TextView
@@ -204,7 +205,7 @@
 
                 <LinearLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="35dp"
                     android:orientation="horizontal" >
 
                     <TextView
@@ -241,7 +242,7 @@
                         android:gravity="center_vertical"
                         android:textSize="15sp" />
                 </LinearLayout>
-                
+
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="25dp"

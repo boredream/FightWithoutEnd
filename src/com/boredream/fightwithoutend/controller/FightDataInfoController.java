@@ -12,10 +12,16 @@ import com.boredream.fightwithoutend.domain.Treasure;
 
 import java.util.List;
 
+/**
+ * 战斗信息处理控制器
+ * 
+ * @author boredream
+ *
+ */
 public class FightDataInfoController {
     private static final String TAG = "FightDataInfoController";
 
-    public static Hero hero = Hero.initHero();
+    public static Hero hero;
 
     public static final int TYPE_H2M = 1;
     public static final int TYPE_M2H = 2;
@@ -161,9 +167,11 @@ public class FightDataInfoController {
         switch (riseStarResult) {
             case Treasure.RISE_STAR_SUCCESS:
                 treasure.setStar(treasure.getStar() + 1);
+                Log.i(TAG, "rise star - no change");
                 break;
             case Treasure.RISE_STAR_BREAK:
                 hero.totalObtainTreasure.remove(treasure);
+                Log.i(TAG, "rise star - no change");
                 break;
             case Treasure.RISE_STAR_NO_CHANGE:
                 // nothing

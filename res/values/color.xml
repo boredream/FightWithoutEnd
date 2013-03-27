@@ -2,6 +2,8 @@
 <resources>
 
     <color name="current_item">#7a31ff</color>
+    <color name="light_blue">#31b6ff</color>
+    <color name="light_orange">#55ffff00</color>
     <color name="transparent">#00000000</color>
     
 </resources>
